@@ -1,6 +1,6 @@
 <?php
 
-namespace Lichen\CommunityGroupPurchase;
+namespace Avicii\CommunityGroupPurchase;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;

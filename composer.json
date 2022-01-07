@@ -1,8 +1,8 @@
 {
-    "name": "lichen/community-group-purchase",
+    "name": "avicii/community-group-purchase",
     "autoload": {
         "psr-4": {
-            "Lichen\\CommunityGroupPurchase\\": "src/"
+            "Avicii\\CommunityGroupPurchase\\": "src/"
         }
     },
     "authors": [

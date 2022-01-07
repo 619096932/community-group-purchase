@@ -1,6 +1,6 @@
 <?php
 
-namespace Lichen\CommunityGroupPurchase;
+namespace Avicii\CommunityGroupPurchase;
 
 class init
 {
