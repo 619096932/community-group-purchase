@@ -1,0 +1,17 @@
+{
+    "name": "lichen/community-group-purchase",
+    "autoload": {
+        "psr-4": {
+            "Lichen\\CommunityGroupPurchase\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "619096932",
+            "email": "619096932@qq.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^7.4"
+    }
+}
