@@ -55,7 +55,7 @@ class duoduomaicai extends BaseApiAbstract
      */
     public function storeInformation()
     {
-        var_dump($this->querySupplierBasicInfo()->supplierCommonInfo);
+
         return [
             'platform'    => '多多买菜',
             'mall_id'     => $this->querySupplierBasicInfo()->supplierCommonInfo->mallId,
@@ -190,6 +190,7 @@ class duoduomaicai extends BaseApiAbstract
                 $list->areaName = $value->areaName;
                 $list->warehouseGroupId = $value->warehouseGroupId;
                 $list->warehouseGroupName = $value->warehouseGroupName;
+                $list->areaId= $value->areaId;
                 $warehouse[] = $list;
             }
         }
