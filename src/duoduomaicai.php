@@ -89,9 +89,6 @@ class duoduomaicai extends BaseApiAbstract
         $api_url = $this->apiurl('fission/functions/mms-faas/goods-aggregation');
         while (true) {
             $data = $this->readTheRequestedContent($this->Client->post($api_url, ['json' => $params]));
-            if (count($data->list) < 20) {
-                break;
-            }
             $params['extraParams']['goodsOffset'] = $params['pageNum'] * 20;
             $params['pageNum']++;
             foreach ($data->list as $goods) {
@@ -103,6 +100,9 @@ class duoduomaicai extends BaseApiAbstract
                 $obj->specName = $goods->specName;
                 $obj->supplierId = $goods->supplierId;
                 $list[] = $obj;
+            }
+            if (count($data->list) < 20) {
+                break;
             }
         }
 
@@ -144,9 +144,7 @@ class duoduomaicai extends BaseApiAbstract
         $list = [];
         while (true) {
             $data = $this->readTheRequestedContent($this->Client->post($apiurl, ['json' => $params]));
-            if (count($data->resultList) < $params['pageSize']) {
-                break;
-            }
+
             $params['page']++;
             foreach ($data->resultList as $goods) {
                 $obj = new \stdClass();
@@ -172,6 +170,9 @@ class duoduomaicai extends BaseApiAbstract
                     }
                 }
                 $list[] = $obj;
+            }
+            if (count($data->resultList) < $params['pageSize']) {
+                break;
             }
         }
         return $list;
