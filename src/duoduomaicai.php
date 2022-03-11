@@ -26,7 +26,7 @@ class duoduomaicai extends BaseApiAbstract
         return sprintf('%s%s', $this->HOST, $uri);
     }
 
-    protected function readTheRequestedContent(\Psr\Http\Message\ResponseInterface $Response)
+    public function readTheRequestedContent(\Psr\Http\Message\ResponseInterface $Response)
     {
         $data = json_decode($Response->getBody()->getContents());
         if ($data->success) {
