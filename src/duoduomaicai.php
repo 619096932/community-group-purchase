@@ -8,9 +8,9 @@ use GuzzleHttp\Cookie\CookieJar;
 class duoduomaicai extends BaseApiAbstract
 {
 
-    protected string  $HOST = 'https://mc.pinduoduo.com/';
-    private CookieJar $cookieJar;
-    private Client    $Client;
+    public string  $HOST = 'https://mc.pinduoduo.com/';
+    public CookieJar $cookieJar;
+    public Client    $Client;
     public            $BasicInfo;
 
     public function __construct($cookie)
@@ -21,7 +21,7 @@ class duoduomaicai extends BaseApiAbstract
                                     ]);
     }
 
-    protected function apiurl($uri)
+    public function apiurl($uri)
     {
         return sprintf('%s%s', $this->HOST, $uri);
     }
