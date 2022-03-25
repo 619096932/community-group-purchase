@@ -8,10 +8,10 @@ use GuzzleHttp\Cookie\CookieJar;
 class duoduomaicai extends BaseApiAbstract
 {
 
-    public string  $HOST = 'https://mc.pinduoduo.com/';
+    public string    $HOST = 'https://mc.pinduoduo.com/';
     public CookieJar $cookieJar;
     public Client    $Client;
-    public            $BasicInfo;
+    public           $BasicInfo;
 
     public function __construct($cookie)
     {
@@ -26,7 +26,7 @@ class duoduomaicai extends BaseApiAbstract
         return sprintf('%s%s', $this->HOST, $uri);
     }
 
-    public function readTheRequestedContent(\Psr\Http\Message\ResponseInterface $Response)
+    protected function readTheRequestedContent(\Psr\Http\Message\ResponseInterface $Response)
     {
         $data = json_decode($Response->getBody()->getContents());
         if ($data->success) {
@@ -99,6 +99,15 @@ class duoduomaicai extends BaseApiAbstract
                 $obj->specName = $goods->specName;
                 $obj->specName = $goods->specName;
                 $obj->supplierId = $goods->supplierId;
+                $code69 = [];
+                if (isset($goods->shortCode) && $goods->shortCode) {
+                    $code69[] = $goods->shortCode;
+                }
+
+                if (isset($goods->goodsProperties->code69List) && $goods->goodsProperties->code69List && is_array($goods->goodsProperties->code69List)) {
+                    $code69 = array_merge($code69, $goods->goodsProperties->code69List);
+                }
+                $obj->code_69_list = $code69;
                 $list[] = $obj;
             }
             if (count($data->list) < 20) {
@@ -108,7 +117,6 @@ class duoduomaicai extends BaseApiAbstract
 
         return $list;
     }
-
 
 
     /**
@@ -164,7 +172,7 @@ class duoduomaicai extends BaseApiAbstract
                 if ($goods->specQuantityDetails ?? false) {
                     foreach ($goods->specQuantityDetails[0]->priceDetail ?? [] as $price) {
                         $price_obj = new \stdClass();
-                        $price_obj->price = $price->supplierPrice/100;
+                        $price_obj->price = $price->supplierPrice / 100;
                         $price_obj->sellUnitTotal = $price->sellUnitTotal;
                         $obj->quotationInformation[] = $price_obj;
                     }
@@ -191,7 +199,7 @@ class duoduomaicai extends BaseApiAbstract
                 $list->areaName = $value->areaName;
                 $list->warehouseGroupId = $value->warehouseGroupId;
                 $list->warehouseGroupName = $value->warehouseGroupName;
-                $list->areaId= $value->areaId;
+                $list->areaId = $value->areaId;
                 $warehouse[] = $list;
             }
         }
