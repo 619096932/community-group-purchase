@@ -108,6 +108,7 @@ class duoduomaicai extends BaseApiAbstract
                     $code69 = array_merge($code69, $goods->goodsProperties->code69List);
                 }
                 $obj->code_69_list = $code69;
+                $obj->cat = $goods->categoryLevelInfo->cat1;
                 $list[] = $obj;
             }
             if (count($data->list) < 20) {
