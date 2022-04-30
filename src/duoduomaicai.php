@@ -143,7 +143,7 @@ class duoduomaicai extends BaseApiAbstract
             'endSessionTime'   => $this->endSessionTime,
             'areaId'           => $this->areaId,
             'page'             => 1,
-            'pageSize'         => 10,
+            'pageSize'         => 100,
             'startSessionTime' => $this->startSessionTime,
             'warehouseIds'     => $this->warehouseIds
         ];
@@ -177,6 +177,14 @@ class duoduomaicai extends BaseApiAbstract
                         $price_obj->sellUnitTotal = $price->sellUnitTotal;
                         $obj->quotationInformation[] = $price_obj;
                     }
+                }
+                try {
+                    //共享仓出库量
+                    $obj->centerAllotInboundQuantity = $goods->quantityManageInfo->inventoryDetail->centerInventoryList[0]->centerAllotInboundQuantity ?? 0;
+                    // 共享仓可用库存
+                    $obj->shareDistributableInventory=$goods->quantityManageInfo->inventoryDetail->shareDistributableInventory;
+                } catch (\Throwable $th) {
+                    $obj->centerAllotInboundQuantity = 0;
                 }
                 $list[] = $obj;
             }
