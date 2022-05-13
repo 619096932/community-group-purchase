@@ -97,7 +97,6 @@ class duoduomaicai extends BaseApiAbstract
                 $obj->goodsName = $goods->goodsName;
                 $obj->hdThumbUrl = $goods->hdThumbUrl;
                 $obj->specName = $goods->specName;
-                $obj->specName = $goods->specName;
                 $obj->supplierId = $goods->supplierId;
                 $code69 = [];
                 if (isset($goods->shortCode) && $goods->shortCode) {
@@ -156,6 +155,7 @@ class duoduomaicai extends BaseApiAbstract
 
             $params['page']++;
             foreach ($data->resultList as $goods) {
+                // 需要处理分仓数据
                 $obj = new \stdClass();
                 $obj->productId = $goods->productId;
                 $obj->areaId = $goods->areaId;
@@ -165,7 +165,6 @@ class duoduomaicai extends BaseApiAbstract
                 $obj->planSales = $goods->salesPlan->planSales ?? '-';
                 $obj->warehouseName = $goods->warehouseName;
                 $obj->inboundTotal = $goods->quantityManageInfo->quantityInfo->inboundTotal;
-                $obj->productId = $goods->productId;
                 $obj->quantity = $goods->quantityManageInfo->quantityInfo->quantity;
                 $obj->sellUnitTotal = $goods->sellUnitTotal;
                 $obj->sellUnitName = $goods->sellUnitName;
@@ -182,10 +181,18 @@ class duoduomaicai extends BaseApiAbstract
                     //共享仓出库量
                     $obj->centerAllotInboundQuantity = $goods->quantityManageInfo->inventoryDetail->centerInventoryList[0]->centerAllotInboundQuantity ?? 0;
                     // 共享仓可用库存
-                    $obj->shareDistributableInventory=$goods->quantityManageInfo->inventoryDetail->shareDistributableInventory;
+                    $obj->shareDistributableInventory = $goods->quantityManageInfo->inventoryDetail->shareDistributableInventory;
                 } catch (\Throwable $th) {
                     $obj->centerAllotInboundQuantity = 0;
                 }
+
+                try {
+                    // 预约在途量
+                    $obj->appointmentTotal = $goods->quantityManageInfo->appointmentData->appointmentTotal;
+                } catch (\Throwable $th) {
+                    $obj->appointmentTotal = 0;
+                }
+
                 $list[] = $obj;
             }
             if (count($data->resultList) < $params['pageSize']) {
